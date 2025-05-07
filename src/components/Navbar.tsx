@@ -1,13 +1,11 @@
 "use client";
-import { Badge, Button, Container, IconButton, Menu, MenuItem, Switch } from "@mui/material";
+import { Badge, Container, IconButton, Menu, MenuItem, Switch } from "@mui/material";
 import { useState } from "react";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import { usePathname } from "next/navigation";
 import { PaletteMode } from "@mui/material";
 import Link from "next/link";
 
@@ -132,7 +130,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                         <Typography
                             variant="h6"
                             noWrap
-                            component="div"
+                            component={Link} href="/"
                             sx={{ display: { xs: 'none', sm: 'block' } }}
                         >
                             STORE
