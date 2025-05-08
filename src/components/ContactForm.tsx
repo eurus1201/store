@@ -9,8 +9,7 @@ import {
   Button,
   Box,
   Typography,
-  FormControl,
-  FormHelperText,
+  Alert,
 } from "@mui/material";
 
 // Define the form schema with Zod
@@ -24,11 +23,13 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
+  const [success, setSuccess] = React.useState(false);
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,27 +41,33 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Simulate API call or use Server Action
+      setSuccess(false); // Reset success state
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      const result = await response.json();
       if (response.ok) {
-        console.log("Success:", await response.json());
-        // Handle success (e.g., show success message, reset form)
+        console.log("Success:", result);
+        
+        setSuccess(true);
+        reset(); // Reset form fields
+        
       } else {
-        const errorData = await response.json();
-        console.error("Error:", errorData);
-        // Set server-side errors
-        if (errorData.errors) {
-          errorData.errors.forEach((err: any) => {
+        console.error("Error:", result);
+        if (result.errors) {
+          result.errors.forEach((err: any) => {
             setError(err.path[0] as keyof FormData, { message: err.message });
           });
+        } else {
+          // Generic error
+          setError("root", { message: result.message || "Failed to send message" });
         }
       }
     } catch (error) {
       console.error("Submission failed:", error);
+      setError("root", { message: "Network error, please try again" });
     }
   };
 
@@ -73,7 +80,16 @@ export default function ContactForm() {
       <Typography variant="h6" gutterBottom>
         Contact Us
       </Typography>
-
+      {success && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          Message sent successfully!
+        </Alert>
+      )}
+      {errors.root && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errors.root.message}
+        </Alert>
+      )}
       {/* Name Field */}
       <Controller
         name="name"
@@ -132,7 +148,7 @@ export default function ContactForm() {
       <Button
         type="submit"
         variant="contained"
-        color="primary"
+        color="secondary"
         fullWidth
         sx={{ mt: 2 }}
         disabled={isSubmitting}
