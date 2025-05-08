@@ -5,6 +5,7 @@ import { ThemeProvider, createTheme,Theme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { PaletteMode, Switch } from "@mui/material";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function ThemeRegistry({
   children,
@@ -52,7 +53,7 @@ export default function ThemeRegistry({
                 disabled: "#757575",
               },
               background: { default: "#121212", paper: "#1d1d1d" },
-              primary: { main: "#90caf9" },
+              primary: { main: "#313131" },
               secondary: { main: "#f48fb1" },
             }),
         },
@@ -94,6 +95,7 @@ export default function ThemeRegistry({
       <CssBaseline />
       <Navbar mode={mode} toggleColorMode={toggleColorMode} />
       {children}
+      <Footer/>
     </ThemeProvider>
   );
 }

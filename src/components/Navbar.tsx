@@ -116,7 +116,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
     return (
         <Box sx={{ flexGrow: 1, mb: 10 }}>
             <AppBar position="fixed" color="primary">
-                <Container maxWidth="xl">
+                <Container maxWidth="lg">
                     <Toolbar>
                         {/* <IconButton
                             size="large"
