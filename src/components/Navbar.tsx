@@ -8,7 +8,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { PaletteMode } from "@mui/material";
 import Link from "next/link";
-
+import RssFeedIcon from '@mui/icons-material/RssFeed';
 
 interface NavbarProps {
     mode: PaletteMode;
@@ -79,13 +79,11 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
+            <MenuItem component={Link} href="/blog">
+                <IconButton  size="large" aria-label="Blog" color="inherit">
+                    <RssFeedIcon />
                 </IconButton>
-                <p>Messages</p>
+                <p>Blog</p>
             </MenuItem>
             <MenuItem>
                 <IconButton
@@ -138,10 +136,8 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
 
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                <Badge badgeContent={4} color="error">
-                                    <MailIcon />
-                                </Badge>
+                            <IconButton component={Link} href="/blog" size="large" aria-label="Blog" color="inherit">
+                                <RssFeedIcon />
                             </IconButton>
                             <IconButton
                                 size="large"
