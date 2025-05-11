@@ -2,14 +2,12 @@
 import { Badge, Container, IconButton, Menu, MenuItem, Switch } from "@mui/material";
 import { useState } from "react";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { PaletteMode } from "@mui/material";
 import Link from "next/link";
 import RssFeedIcon from '@mui/icons-material/RssFeed';
-
+import PeopleIcon from '@mui/icons-material/People';
 interface NavbarProps {
     mode: PaletteMode;
     toggleColorMode: () => void;
@@ -80,22 +78,20 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
             onClose={handleMobileMenuClose}
         >
             <MenuItem component={Link} href="/blog">
-                <IconButton  size="large" aria-label="Blog" color="inherit">
+                <IconButton size="large" aria-label="Blog" color="inherit">
                     <RssFeedIcon />
                 </IconButton>
                 <p>Blog</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem component={Link} href="/usrs">
                 <IconButton
                     size="large"
-                    aria-label="show 17 new notifications"
+                    aria-label="Users"
                     color="inherit"
                 >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
+                    <PeopleIcon />
                 </IconButton>
-                <p>Notifications</p>
+                <p>Users</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -141,12 +137,11 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                             </IconButton>
                             <IconButton
                                 size="large"
-                                aria-label="show 17 new notifications"
+                                aria-label="Users"
                                 color="inherit"
+                                component={Link} href="/users"
                             >
-                                <Badge badgeContent={17} color="error">
-                                    <NotificationsIcon />
-                                </Badge>
+                                <PeopleIcon />
                             </IconButton>
                             <IconButton
                                 size="large"
