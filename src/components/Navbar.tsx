@@ -83,7 +83,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                 </IconButton>
                 <p>Blog</p>
             </MenuItem>
-            <MenuItem component={Link} href="/usrs">
+            <MenuItem component={Link} href="/users">
                 <IconButton
                     size="large"
                     aria-label="Users"
