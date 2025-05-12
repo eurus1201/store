@@ -1,5 +1,5 @@
 "use client";
-import { Badge, Container, IconButton, Menu, MenuItem, Switch } from "@mui/material";
+import { Container, IconButton, Menu, MenuItem, Switch } from "@mui/material";
 import { useState } from "react";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -8,6 +8,11 @@ import { PaletteMode } from "@mui/material";
 import Link from "next/link";
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import PeopleIcon from '@mui/icons-material/People';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useRouter } from "next/navigation";
+import { cookies } from "next/headers";
 interface NavbarProps {
     mode: PaletteMode;
     toggleColorMode: () => void;
@@ -16,9 +21,22 @@ interface NavbarProps {
 const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+    const router = useRouter();
+    const token = typeof window === "undefined" ? null : document.cookie.includes("token=");
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const handleLogout = () => {
+        document.cookie = "token=; path=/; max-age=0";
+        router.push("/login");
+    };
+
+
+
+
+
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -77,6 +95,30 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            {!token ? <> <MenuItem component={Link} href="/login">
+                <IconButton size="large" aria-label="Blog" color="inherit">
+                    <LoginIcon />
+                </IconButton>
+                <p>Login</p>
+            </MenuItem>
+                <MenuItem component={Link} href="/register">
+                    <IconButton size="large" aria-label="Blog" color="inherit">
+                        <AppRegistrationIcon />
+                    </IconButton>
+                    <p>Register</p>
+                </MenuItem>
+            </>
+                : <MenuItem onClick={handleLogout}>
+                    <IconButton size="large" aria-label="Blog" color="inherit">
+                        <LogoutIcon />
+                    </IconButton>
+                    <p>Logout</p>
+                </MenuItem>}
+
+
+
+
+
             <MenuItem component={Link} href="/blog">
                 <IconButton size="large" aria-label="Blog" color="inherit">
                     <RssFeedIcon />
@@ -132,6 +174,17 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
 
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        {token ?
+                                <IconButton onClick={handleLogout} size="large" aria-label="Logout" color="inherit">
+                                    <LogoutIcon />
+                                </IconButton>
+                                :
+                                <>
+                                    <IconButton component={Link} href="/login" size="large" aria-label="Login" color="inherit"><LoginIcon /></IconButton> 
+                                    <IconButton component={Link} href="/register" size="large" aria-label="Register" color="inherit"><AppRegistrationIcon /></IconButton>
+
+                                </>
+                            }
                             <IconButton component={Link} href="/blog" size="large" aria-label="Blog" color="inherit">
                                 <RssFeedIcon />
                             </IconButton>
@@ -154,6 +207,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                             >
                                 <AccountCircle />
                             </IconButton>
+                        
                         </Box>
                         <Switch
                             checked={mode === "dark"}
