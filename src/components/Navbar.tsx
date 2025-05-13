@@ -95,7 +95,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            {!token ? <> <MenuItem component={Link} href="/login">
+            {!token ? <div> <MenuItem component={Link} href="/login">
                 <IconButton size="large" aria-label="Blog" color="inherit">
                     <LoginIcon />
                 </IconButton>
@@ -107,7 +107,7 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                     </IconButton>
                     <p>Register</p>
                 </MenuItem>
-            </>
+            </div>
                 : <MenuItem onClick={handleLogout}>
                     <IconButton size="large" aria-label="Blog" color="inherit">
                         <LogoutIcon />
@@ -179,11 +179,13 @@ const Navbar = ({ mode, toggleColorMode }: NavbarProps) => {
                                     <LogoutIcon />
                                 </IconButton>
                                 :
-                                <>
-                                    <IconButton component={Link} href="/login" size="large" aria-label="Login" color="inherit"><LoginIcon /></IconButton> 
-                                    <IconButton component={Link} href="/register" size="large" aria-label="Register" color="inherit"><AppRegistrationIcon /></IconButton>
+                            <>
 
-                                </>
+                                <IconButton component={Link} href="/login" size="large" aria-label="Login" color="inherit"><LoginIcon /></IconButton> 
+                                <IconButton component={Link} href="/register" size="large" aria-label="Register" color="inherit"><AppRegistrationIcon /></IconButton>
+                            </>
+
+                                
                             }
                             <IconButton component={Link} href="/blog" size="large" aria-label="Blog" color="inherit">
                                 <RssFeedIcon />
